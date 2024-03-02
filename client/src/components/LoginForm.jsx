@@ -11,6 +11,7 @@ const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  // Define mutation
   const [loginUser] = useMutation(LOGIN_USER)
 
   const handleInputChange = (event) => {
@@ -36,7 +37,7 @@ const LoginForm = () => {
         throw new Error('something went wrong!');
       }
 
-      const { token, user } = await response.data.login;
+      const { token, user } = await response.data.loginUser;
       console.log(user);
       Auth.login(token);
     } catch (err) {
