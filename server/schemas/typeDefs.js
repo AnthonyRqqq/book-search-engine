@@ -1,5 +1,5 @@
 const typeDefs = `
-    // Typedef for a User
+    // Type for User
     type User {
         _id: ID
         username: String
@@ -8,7 +8,7 @@ const typeDefs = `
         savedBooks: [Book]
     }
 
-    // Typedef for a Book
+    // Type for Book
     type Book {
         authors: [String]
         description: String
@@ -18,7 +18,7 @@ const typeDefs = `
         title: String
     }
 
-    // Typedef for authentication token
+    // Type for Auth
     type Auth {
         token: String
         user: User
@@ -26,7 +26,7 @@ const typeDefs = `
 
     // Query for user accessing the program
     type Query {
-        me: User
+        me(profileId: ID!): User
     }
 
     type Mutation {
