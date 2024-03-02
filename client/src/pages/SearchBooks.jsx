@@ -9,8 +9,8 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { saveBook, searchGoogleBooks } from '../utils/API';
-import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+import { searchGoogleBooks } from '../utils/API';
+import { getSavedBookIds } from '../utils/localStorage';
 
 // Import SAVE_BOOK mutation and ability to use mutations
 import { SAVE_BOOK } from '../utils/mutations';
