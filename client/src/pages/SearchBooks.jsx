@@ -32,7 +32,7 @@ const SearchBooks = () => {
   useEffect(() => {
     return () => {
       // Refactored to utilize new mutation code
-      saveBook({ variables: savedBookIds });
+      saveBook(savedBookIds);
     };
     // Only runs on component unmount
   }, []);
