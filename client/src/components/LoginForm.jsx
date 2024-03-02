@@ -2,13 +2,16 @@
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
-import { loginUser } from '../utils/API';
 import Auth from '../utils/auth';
+// Import LOGIN_USER mutation and ability to use mutations
+import { LOGIN_USER } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [loginUser] = useMutation(LOGIN_USER)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -25,14 +28,15 @@ const LoginForm = () => {
       event.stopPropagation();
     }
 
+    // Refactor lines 32-39 to utilize new mutation code
     try {
-      const response = await loginUser(userFormData);
+      const response = await loginUser({ variables: userFormData });
 
-      if (!response.ok) {
+      if (response.error) {
         throw new Error('something went wrong!');
       }
 
-      const { token, user } = await response.json();
+      const { token, user } = await response.data.login;
       console.log(user);
       Auth.login(token);
     } catch (err) {
