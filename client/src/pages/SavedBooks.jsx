@@ -7,14 +7,23 @@ import {
   Col
 } from 'react-bootstrap';
 
-import { getMe, deleteBook } from '../utils/API';
+// import { getMe, deleteBook } from '../utils/API';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
+
+// Import GET_ME and REMOVE_BOOK mutations and ability to use mutations
+import { GET_ME } from '../utils/queries';
+import { REMOVE_BOOK } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
 
 
 
 const SavedBooks = () => {
   const [userData, setUserData] = useState({});
+
+  // Define mutations
+  const getMe = useMutation(GET_ME);
+  const deleteBook = useMutation(REMOVE_BOOK);
 
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
@@ -27,14 +36,14 @@ const SavedBooks = () => {
         if (!token) {
           return false;
         }
+        // Refactor lines 40-46 to utilize new mutation code
+        const response = await getMe({ variables: token });
 
-        const response = await getMe(token);
-
-        if (!response.ok) {
+        if (response.error) {
           throw new Error('something went wrong!');
         }
 
-        const user = await response.json();
+        const { user } = await response.data.getMe;
         setUserData(user);
       } catch (err) {
         console.error(err);
@@ -53,13 +62,14 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await deleteBook(bookId, token);
+      // Refactor lines 66-77 to utilize new mutation code
+      const response = await deleteBook({ variables: { bookId, token }});
 
-      if (!response.ok) {
+      if (response.error) {
         throw new Error('something went wrong!');
       }
 
-      const updatedUser = await response.json();
+      const { updatedUser } = await response.data.deleteBook;
       setUserData(updatedUser);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
