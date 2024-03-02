@@ -7,7 +7,6 @@ import {
   Col
 } from 'react-bootstrap';
 
-// import { getMe, deleteBook } from '../utils/API';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
@@ -22,7 +21,7 @@ const SavedBooks = () => {
   const [userData, setUserData] = useState({});
 
   // Define mutations
-  const getMe = useMutation(GET_ME);
+  const getMe = useQuery(GET_ME);
   const deleteBook = useMutation(REMOVE_BOOK);
 
   // use this to determine if `useEffect()` hook needs to run again
@@ -36,7 +35,7 @@ const SavedBooks = () => {
         if (!token) {
           return false;
         }
-        // Refactor lines 40-46 to utilize new mutation code
+        // Refactor to utilize new mutation code
         const response = await getMe({ variables: token });
 
         if (response.error) {
@@ -62,7 +61,7 @@ const SavedBooks = () => {
     }
 
     try {
-      // Refactor lines 66-77 to utilize new mutation code
+      // Refactor to utilize new mutation code
       const response = await deleteBook({ variables: { bookId, token }});
 
       if (response.error) {
