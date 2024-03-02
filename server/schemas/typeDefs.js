@@ -26,7 +26,7 @@ const typeDefs = `
 
     // Query for user accessing the program
     type Query {
-        me(profileId: ID!): User
+        me(userId: ID!): User
     }
 
     type Mutation {
@@ -37,10 +37,10 @@ const typeDefs = `
         addUser(username: String!, email: String!, password: String!): Auth
 
         // For saving a book from an input based on the Book type, returns a User type
-        saveBook(input: Book!): User
+        saveBook(input: Book!, userId: ID!): User
 
         // For removing a book based on the bookId, returns a User type
-        removeBook(bookId: bookId!): User
+        removeBook(bookId: bookId!, userId: ID!): User
     }
 `
 
