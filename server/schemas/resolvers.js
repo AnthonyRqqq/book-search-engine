@@ -6,7 +6,7 @@ const resolvers = {
     Query: {
         // For finding current user profile
         me: async (parent, { userId }) => {
-            return User.findone({ _id: userId })
+            return User.findOne({ _id: userId })
         }
     },
 
